@@ -10,7 +10,7 @@ def get_sentinel_user():
 @python_2_unicode_compatible
 class Listing(models.Model):
     name = models.CharField(max_length=200)
-    main_image = models.ImageField(blank=True, null=True)
+    main_image = models.ImageField(blank=True, null=True, upload_to='images')
     location = models.CharField(max_length=300, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
@@ -21,7 +21,7 @@ class Listing(models.Model):
 class ListingImage(models.Model):
     listing = models.ForeignKey(Listing, related_name='images',
             on_delete=models.CASCADE)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='images')
 
     def __str__(self):
         return 'Image for %s' % self.listing.name
@@ -44,5 +44,5 @@ class Review(models.Model):
         return 'Review for %s by %s on %s, %d stars' % (
                 self.listing.name,
                 self.author.get_full_name(),
-                self.date.isoformat(' '),
+                self.date.date().isoformat(),
                 self.rating)
