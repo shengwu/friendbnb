@@ -8,3 +8,11 @@ def home(request):
 
 def about(request):
     return render(request, 'about.html', context=locals())
+
+def listing(request, slug):
+    try:
+        print slug
+        listing = Listing.objects.get(slug=slug)
+    except Exception:
+        return render(request, '404.html')
+    return render(request, 'listing.html', context=locals())

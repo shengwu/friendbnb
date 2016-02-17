@@ -5,4 +5,5 @@ from . import views
 urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^about', views.about, name='about'),
+    url(r'^listing/(?P<slug>[\w-]+)', views.listing, name='listing'),
 ]

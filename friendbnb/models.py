@@ -4,12 +4,15 @@ from django.conf import settings
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
+from autoslug import AutoSlugField
+
 def get_sentinel_user():
     return get_user_model().objects.get_or_create(username='deleted')[0]
 
 @python_2_unicode_compatible
 class Listing(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
+    slug = AutoSlugField(populate_from='name', editable=True, unique=True)
     main_image = models.ImageField(blank=True, null=True, upload_to='images')
     location = models.CharField(max_length=300, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
