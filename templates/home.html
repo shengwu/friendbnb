@@ -16,7 +16,7 @@
         <tr>
           <th scope="row">{{ listing.name }}</th>
           <td>{{ listing.location }}</td>
-          <td>{{ listing.name }}</td>
+          <td>{{ listing.reviews.latest.date }}</td>
         </tr>
         {% endfor %}
       </tbody>

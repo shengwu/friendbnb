@@ -28,10 +28,12 @@ class ListingImage(models.Model):
 
 @python_2_unicode_compatible
 class Review(models.Model):
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    listing = models.ForeignKey(Listing, related_name='reviews',
+            on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True,
             help_text='The date the review was submitted')
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
+            related_name='reviews',
             on_delete=models.SET(get_sentinel_user),
             help_text='The author of the review')
     rating = models.IntegerField(blank=True, null=True)
@@ -39,6 +41,9 @@ class Review(models.Model):
 
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+
+    class Meta:
+        get_latest_by = 'date'
 
     def __str__(self):
         return 'Review for %s by %s on %s, %d stars' % (
